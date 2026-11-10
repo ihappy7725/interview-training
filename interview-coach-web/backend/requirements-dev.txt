@@ -1,0 +1,3 @@
+# 개발 도구 전용 (서버 실행에는 필요 없음)
+# tools/make_favicons.py 실행용
+pillow>=13.0

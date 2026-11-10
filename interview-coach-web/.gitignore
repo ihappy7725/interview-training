@@ -1,0 +1,19 @@
+# 비밀 값
+.env
+
+# 음성 캐시 (ElevenLabs로 만든 mp3, 다시 만들 수 있음)
+backend/cache/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Node / Vite (frontend/.gitignore에도 있음)
+node_modules/
+dist/
+
+# OS / 에디터
+.DS_Store
+.vscode/*
+!.vscode/extensions.json

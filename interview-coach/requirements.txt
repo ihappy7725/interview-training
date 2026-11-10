@@ -1,0 +1,11 @@
+streamlit>=1.50
+streamlit-webrtc>=0.60
+mediapipe>=0.10.14   # opencv-contrib-python 포함
+av>=12
+numpy>=1.26
+pandas>=2.0
+plotly>=5.20
+librosa>=0.10
+soundfile>=0.12
+openai>=1.60
+python-dotenv>=1.0
