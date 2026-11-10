@@ -1,5 +1,6 @@
 // 오른쪽 '실시간 코칭' 카드. 값은 모두 props로 받아서 보여주기만 한다.
 // 판정 기준은 기존 app.py의 live_panel()과 동일하다.
+import Icon from './Icon'
 
 const level = (v, good, warn) => (v >= good ? 'good' : v >= warn ? 'warn' : 'bad')
 const pct = (v) => `${Math.round(v * 100)}%`
@@ -56,11 +57,17 @@ export default function CoachingPanel({ enabled, cameraOn, status, snapshot }) {
   return (
     <section className="card coaching">
       <div className="card-head">
-        <h2 className="sec-title">실시간 코칭</h2>
-        {enabled && cameraOn && status === 'running' && <span className="badge good">● 분석 중</span>}
+        <h2 className="card-title">
+          <Icon name="camera" size={18} /> 실시간 코칭
+        </h2>
+        {enabled && cameraOn && status === 'running' && (
+          <span className="badge good">
+            <span className="live-dot" /> 분석 중
+          </span>
+        )}
       </div>
       {body}
-      <p className="muted small footnote">MediaPipe 표정 계수로 추정한 연습용 지표입니다.</p>
+      <p className="footnote">MediaPipe 표정 계수로 추정한 연습용 지표입니다.</p>
     </section>
   )
 }

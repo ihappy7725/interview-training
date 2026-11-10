@@ -1,3 +1,7 @@
+# 서버 실행용 (Vercel도 이 파일로 설치)
 fastapi>=0.162
 uvicorn>=0.54
 python-dotenv>=1.2
+openai>=3.49          # 질문 생성·웹 검색·전사·평가
+certifi>=2026.10      # ElevenLabs HTTPS 인증서 묶음 (Mac python.org 설치판 인증서 문제 해결)
+python-multipart>=0.0.33  # 녹음 파일 업로드(FastAPI Form/File)에 필요

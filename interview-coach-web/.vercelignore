@@ -1,0 +1,10 @@
+# Vercel CLI로 올릴 때 제외할 파일 (Git 연동 배포는 .gitignore 기준)
+.env
+**/.env
+backend/venv/
+backend/cache/
+backend/__pycache__/
+frontend/node_modules/
+frontend/dist/
+tools/
+.DS_Store

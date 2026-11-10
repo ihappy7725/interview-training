@@ -1,7 +1,7 @@
 /**
  * useQuestionVoice: '질문 듣기' 재생을 관리하는 커스텀 훅
  *
- * 1순위: 서버의 /api/tts (ElevenLabs 음성, 서버가 mp3를 캐시)
+ * 1순위: 서버의 /api/tts (ElevenLabs 음성, 서버가 mp3를 캐시). 서버가 서명한 질문만 가능(크레딧 보호)
  * 예비: 브라우저 내장 speechSynthesis (서버 TTS가 꺼져 있거나 실패했을 때 자동 전환)
  *
  * state:  'idle' | 'loading' | 'playing'
@@ -78,12 +78,13 @@ export function useQuestionVoice(ttsEnabled) {
     setState('playing')
   }
 
-  const play = async (text, lang) => {
+  const play = async (text, sig, lang) => {
     stop()
     const token = tokenRef.current
     setNotice('')
-    if (!ttsEnabled) {
-      playBrowser(text, lang, token)
+    if (!ttsEnabled || !sig) {
+      // 서명이 없는 질문(직접 입력·수정)은 서버가 읽어 주지 않으므로 바로 브라우저 음성
+      playBrowser(text, lang, token, ttsEnabled ? '직접 입력한 질문' : '')
       return
     }
 
@@ -97,7 +98,7 @@ export function useQuestionVoice(ttsEnabled) {
       const res = await fetch('/api/tts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, lang: lang.code }),
+        body: JSON.stringify({ text, lang: lang.code, sig }),
         signal: controller.signal,
       })
       if (!res.ok) {
@@ -124,8 +125,8 @@ export function useQuestionVoice(ttsEnabled) {
     }
   }
 
-  /** 버튼 하나로: 멈춰 있으면 재생, 재생/로딩 중이면 정지 */
-  const toggle = (text, lang) => (state === 'idle' ? play(text, lang) : stop())
+  /** 버튼 하나로: 멈춰 있으면 재생, 재생/로딩 중이면 정지. q = { question, sig } */
+  const toggle = (q, lang) => (state === 'idle' ? play(q.question, q.sig, lang) : stop())
 
   return { state, source, notice, toggle, stop }
 }

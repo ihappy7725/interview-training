@@ -23,7 +23,7 @@ function Item({ label, value, hint }) {
 }
 
 export default function DevPanel({ info }) {
-  const { serverStatus, checkedAt, latencyMs, configLoaded, tts, stats } = info
+  const { serverStatus, checkedAt, latencyMs, configLoaded, tts, ai, stats } = info
   const pose = stats?.pose
   const perf = stats?.perf
 
@@ -35,6 +35,7 @@ export default function DevPanel({ info }) {
       <Item label="응답 시간" value={latencyMs != null ? `${latencyMs} ms` : '—'} />
       <Item label="언어 설정" value={configLoaded ? '불러옴' : '기본값 사용'} />
       <Item label="TTS" value={tts ? (tts.enabled ? `ElevenLabs · ${tts.model_id}` : '키 없음 → 기본 음성') : '—'} />
+      <Item label="AI" value={ai ? (ai.enabled ? `${ai.model} · ${ai.access_required ? '코드 필요' : '코드 없음'}` : '키 없음') : '—'} />
 
       <p className="dev-title">머리 각도</p>
       {pose ? (
